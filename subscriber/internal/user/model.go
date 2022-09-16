@@ -1,5 +1,5 @@
-package user
+package model
 
-type Request struct {
+type CreateUser struct {
 	DisplayName string `json:"displayName" binding:"required"`
 }
