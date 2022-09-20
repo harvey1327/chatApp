@@ -2,16 +2,16 @@ package messagebroker
 
 import "github.com/google/uuid"
 
-type message struct {
+type message[T any] struct {
 	queueName    string
 	contentType  string
-	EventMessage eventMessage `json:"eventMessage"`
+	EventMessage eventMessage[T] `json:"eventMessage"`
 }
 
-type eventMessage struct {
-	ID     string      `json:"id"`
-	Status status      `json:"status"`
-	Body   interface{} `json:"body"`
+type eventMessage[T any] struct {
+	ID     string `json:"id"`
+	Status status `json:"status"`
+	Body   T      `json:"body"`
 }
 
 type status string
@@ -22,10 +22,10 @@ const (
 	FAILED   status = "FAILED"
 )
 
-func Message(body interface{}, queueName string) message {
-	return message{
+func Message[T any](body T, queueName string) message[T] {
+	return message[T]{
 		contentType:  "application/json",
-		EventMessage: eventMessage{Status: PENDING, Body: body, ID: uuid.New().String()},
+		EventMessage: eventMessage[T]{Status: PENDING, Body: body, ID: uuid.New().String()},
 		queueName:    queueName,
 	}
 }
