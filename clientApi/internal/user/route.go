@@ -3,18 +3,18 @@ package user
 import (
 	"net/http"
 
-	"github.com/chatapp/clientapi/internal/messagebroker"
+	"github.com/chatapp/messagebroker"
 	"github.com/gin-gonic/gin"
 )
 
-func Route(parent *gin.RouterGroup, service messagebroker.MessageBroker) {
+func Route(parent *gin.RouterGroup, service messagebroker.MessageBrokerCommands[Request]) {
 	r := parent.Group("/user")
 	{
 		r.POST("/create", createUser(service))
 	}
 }
 
-func createUser(service messagebroker.MessageBroker) gin.HandlerFunc {
+func createUser(service messagebroker.MessageBrokerCommands[Request]) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var request Request
 		if err := ctx.BindJSON(&request); err != nil {

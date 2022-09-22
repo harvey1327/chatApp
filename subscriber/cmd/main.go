@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/chatapp/subscriber/internal/messagebroker"
+	"github.com/chatapp/messagebroker"
 	"github.com/chatapp/subscriber/internal/user"
 )
 
