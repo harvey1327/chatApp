@@ -12,11 +12,11 @@ func main() {
 	defer broker.CloseConnection()
 
 	broker.DeclareQueue("user.create")
-	commands := messagebroker.NewRabbitMQCommands[user.Request](broker)
+	publisher := messagebroker.NewRabbitPublish(broker)
 
 	v1 := router.Group("/v1")
 	{
-		user.Route(v1, commands)
+		user.Route(v1, publisher)
 	}
 
 	router.Run("0.0.0.0:8080")

@@ -13,7 +13,7 @@ func main() {
 
 	broker.DeclareQueue("user.create")
 	log.Println("listening on user.create")
-	msgs := messagebroker.NewRabbitMQCommands[user.CreateUser](broker).Subscribe("user.create")
+	msgs := messagebroker.NewRabbitSubscribe[user.CreateUser](broker).Subscribe("user.create")
 	for {
 		msg, ok := <-msgs
 		if !ok {

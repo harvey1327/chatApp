@@ -2,10 +2,16 @@ package messagebroker
 
 import "github.com/google/uuid"
 
-type message[T any] struct {
+type subscribeMessage[T any] struct {
 	queueName    string
 	contentType  string
 	EventMessage eventMessage[T] `json:"eventMessage"`
+}
+
+type publishMessage struct {
+	queueName    string
+	contentType  string
+	EventMessage eventMessage[interface{}] `json:"eventMessage"`
 }
 
 type eventMessage[T any] struct {
@@ -22,10 +28,18 @@ const (
 	FAILED   status = "FAILED"
 )
 
-func Message[T any](body T, queueName string) message[T] {
-	return message[T]{
+func SubscribeMessage[T any](body T, queueName string) subscribeMessage[T] {
+	return subscribeMessage[T]{
 		contentType:  "application/json",
 		EventMessage: eventMessage[T]{Status: PENDING, Body: body, ID: uuid.New().String()},
+		queueName:    queueName,
+	}
+}
+
+func PublishMessage(body interface{}, queueName string) publishMessage {
+	return publishMessage{
+		contentType:  "application/json",
+		EventMessage: eventMessage[interface{}]{Status: PENDING, Body: body, ID: uuid.New().String()},
 		queueName:    queueName,
 	}
 }

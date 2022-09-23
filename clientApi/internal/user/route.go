@@ -7,21 +7,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Route(parent *gin.RouterGroup, service messagebroker.MessageBrokerCommands[Request]) {
+func Route(parent *gin.RouterGroup, publisher messagebroker.Publish) {
 	r := parent.Group("/user")
 	{
-		r.POST("/create", createUser(service))
+		r.POST("/create", createUser(publisher))
 	}
 }
 
-func createUser(service messagebroker.MessageBrokerCommands[Request]) gin.HandlerFunc {
+func createUser(publisher messagebroker.Publish) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var request Request
 		if err := ctx.BindJSON(&request); err != nil {
 			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		if err := service.Publish(messagebroker.Message(request, "user.create")); err != nil {
+		if err := publisher.Publish(messagebroker.PublishMessage(request, "user.create")); err != nil {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
