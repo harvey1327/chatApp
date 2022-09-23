@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/chatapp/clientapi/internal/user"
 	"github.com/chatapp/messagebroker"
+	"github.com/chatapp/messagebroker/events/createuser"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,7 +12,7 @@ func main() {
 	broker := messagebroker.NewRabbitMQ()
 	defer broker.CloseConnection()
 
-	broker.DeclareQueue("user.create")
+	broker.DeclareQueue(createuser.QUEUE_NAME)
 	publisher := messagebroker.NewRabbitPublish(broker)
 
 	v1 := router.Group("/v1")

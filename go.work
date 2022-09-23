@@ -3,5 +3,5 @@ go 1.19
 use (
 	./clientApi
 	./messagebroker
-	./subscriber
+	./createuserSubscriber
 )

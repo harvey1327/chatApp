@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/chatapp/messagebroker"
+	"github.com/chatapp/messagebroker/events/createuser"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +17,7 @@ func Route(parent *gin.RouterGroup, publisher messagebroker.Publish) {
 
 func createUser(publisher messagebroker.Publish) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var request Request
+		var request createuser.Model
 		if err := ctx.BindJSON(&request); err != nil {
 			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return

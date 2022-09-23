@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/chatapp/messagebroker"
-	"github.com/chatapp/subscriber/internal/user"
+	"github.com/chatapp/messagebroker/events/createuser"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 
 	broker.DeclareQueue("user.create")
 	log.Println("listening on user.create")
-	msgs := messagebroker.NewRabbitSubscribe[user.CreateUser](broker).Subscribe("user.create")
+	msgs := messagebroker.NewRabbitSubscribe[createuser.Model](broker).Subscribe(createuser.QUEUE_NAME)
 	for {
 		msg, ok := <-msgs
 		if !ok {
