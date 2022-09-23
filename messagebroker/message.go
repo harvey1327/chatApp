@@ -15,9 +15,9 @@ type publishMessage struct {
 }
 
 type eventMessage[T any] struct {
-	ID     string `json:"id"`
-	Status status `json:"status"`
-	Body   T      `json:"body"`
+	EventID string `json:"eventID"`
+	Status  status `json:"status"`
+	Body    T      `json:"body"`
 }
 
 type status string
@@ -28,18 +28,10 @@ const (
 	FAILED   status = "FAILED"
 )
 
-func SubscribeMessage[T any](body T, queueName string) subscribeMessage[T] {
-	return subscribeMessage[T]{
-		contentType:  "application/json",
-		EventMessage: eventMessage[T]{Status: PENDING, Body: body, ID: uuid.New().String()},
-		queueName:    queueName,
-	}
-}
-
 func PublishMessage(body interface{}, queueName string) publishMessage {
 	return publishMessage{
 		contentType:  "application/json",
-		EventMessage: eventMessage[interface{}]{Status: PENDING, Body: body, ID: uuid.New().String()},
+		EventMessage: eventMessage[interface{}]{Status: PENDING, Body: body, EventID: uuid.New().String()},
 		queueName:    queueName,
 	}
 }

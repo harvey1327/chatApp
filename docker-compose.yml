@@ -7,7 +7,7 @@ services:
       - 15672:15672
 
   db:
-    image: mongo:6.0
+    image: mongo:5.0.12
     restart: always
     ports:
       - 27017:27017
@@ -16,8 +16,10 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: guest
 
   db-ui:
-    image: mongo-express:0.54
+    image: mongo-express:0.54.0
     restart: always
+    depends_on:
+      - "db"
     ports:
       - 8081:8081
     environment:
