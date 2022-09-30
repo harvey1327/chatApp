@@ -8,26 +8,26 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type CollectionCommands interface {
-	FindByID(id string) (interface{}, error)
-	FindSingleByQuery(query findBy) (interface{}, error)
-	FindMultipleByQuery(query findBy) ([]interface{}, error)
-	InsertOne(object interface{}) error
+type CollectionCommands[T any] interface {
+	FindByID(id string) (T, error)
+	FindSingleByQuery(query findBy) (T, error)
+	FindMultipleByQuery(query findBy) ([]T, error)
+	InsertOne(object T) error
 }
 
-type mongoDBCollectionImpl struct {
+type mongoDBCollectionImpl[T any] struct {
 	database   *mongo.Database
 	collection *mongo.Collection
 }
 
-func NewCollection(database DB, collection string) CollectionCommands {
-	return &mongoDBCollectionImpl{
+func NewCollection[T any](database DB, collection string) CollectionCommands[T] {
+	return &mongoDBCollectionImpl[T]{
 		database:   database.getDatabase(),
 		collection: database.getDatabase().Collection(collection),
 	}
 }
 
-func (m *mongoDBCollectionImpl) InsertOne(object interface{}) error {
+func (m *mongoDBCollectionImpl[T]) InsertOne(object T) error {
 	_, err := m.collection.InsertOne(context.TODO(), object)
 	if err != nil {
 		return err
@@ -35,15 +35,15 @@ func (m *mongoDBCollectionImpl) InsertOne(object interface{}) error {
 	return nil
 }
 
-func (m *mongoDBCollectionImpl) FindByID(id string) (interface{}, error) {
+func (m *mongoDBCollectionImpl[T]) FindByID(id string) (T, error) {
 	objectId, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return nil, err
+		return *new(T), err
 	}
-	var result interface{}
+	var result T
 	err = m.collection.FindOne(context.TODO(), bson.M{"_id": objectId}).Decode(&result)
 	if err != nil {
-		return nil, err
+		return *new(T), err
 	}
 	return result, nil
 }
@@ -68,17 +68,17 @@ func (fb findBy) convert() bson.M {
 	return res
 }
 
-func (m *mongoDBCollectionImpl) FindSingleByQuery(query findBy) (interface{}, error) {
-	var result interface{}
+func (m *mongoDBCollectionImpl[T]) FindSingleByQuery(query findBy) (T, error) {
+	var result T
 	err := m.collection.FindOne(context.TODO(), query.convert()).Decode(&result)
 	if err != nil {
-		return nil, err
+		return *new(T), err
 	}
 	return result, nil
 }
 
-func (m *mongoDBCollectionImpl) FindMultipleByQuery(query findBy) ([]interface{}, error) {
-	results := make([]interface{}, 0)
+func (m *mongoDBCollectionImpl[T]) FindMultipleByQuery(query findBy) ([]T, error) {
+	results := make([]T, 0)
 	curr, err := m.collection.Find(context.TODO(), query.convert())
 	if err != nil {
 		return nil, err
