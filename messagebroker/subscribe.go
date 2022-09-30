@@ -8,7 +8,7 @@ import (
 )
 
 type Subscribe[T any] interface {
-	Subscribe(queueName string) <-chan eventMessage[T]
+	Subscribe(queueName string) <-chan EventMessage[T]
 }
 
 type rabbitSubscribe[T any] struct {
@@ -21,8 +21,8 @@ func NewRabbitSubscribe[T any](broker MessageBroker) Subscribe[T] {
 	}
 }
 
-func (rbtp *rabbitSubscribe[T]) Subscribe(queueName string) <-chan eventMessage[T] {
-	results := make(chan eventMessage[T])
+func (rbtp *rabbitSubscribe[T]) Subscribe(queueName string) <-chan EventMessage[T] {
+	results := make(chan EventMessage[T])
 	msgs, err := rbtp.channel.Consume(queueName, "", true, false, false, false, nil)
 	if err != nil {
 		log.Fatal(err)

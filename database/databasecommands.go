@@ -15,6 +15,8 @@ type CollectionCommands[T any] interface {
 	InsertOne(object T) error
 }
 
+var EMPTY = mongo.ErrNoDocuments
+
 type mongoDBCollectionImpl[T any] struct {
 	database   *mongo.Database
 	collection *mongo.Collection
@@ -72,6 +74,9 @@ func (m *mongoDBCollectionImpl[T]) FindSingleByQuery(query findBy) (T, error) {
 	var result T
 	err := m.collection.FindOne(context.TODO(), query.convert()).Decode(&result)
 	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return *new(T), err
+		}
 		return *new(T), err
 	}
 	return result, nil
