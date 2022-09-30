@@ -11,6 +11,7 @@ import (
 type CollectionCommands interface {
 	FindByID(id string) (interface{}, error)
 	FindSingleByQuery(query findBy) (interface{}, error)
+	FindMultipleByQuery(query findBy) ([]interface{}, error)
 	InsertOne(object interface{}) error
 }
 
@@ -27,7 +28,7 @@ func NewCollection(database DB, collection string) CollectionCommands {
 }
 
 func (m *mongoDBCollectionImpl) InsertOne(object interface{}) error {
-	_, err := m.collection.InsertOne(context.Background(), object)
+	_, err := m.collection.InsertOne(context.TODO(), object)
 	if err != nil {
 		return err
 	}
@@ -40,7 +41,7 @@ func (m *mongoDBCollectionImpl) FindByID(id string) (interface{}, error) {
 		return nil, err
 	}
 	var result interface{}
-	err = m.collection.FindOne(context.Background(), bson.M{"_id": objectId}).Decode(&result)
+	err = m.collection.FindOne(context.TODO(), bson.M{"_id": objectId}).Decode(&result)
 	if err != nil {
 		return nil, err
 	}
@@ -69,9 +70,22 @@ func (fb findBy) convert() bson.M {
 
 func (m *mongoDBCollectionImpl) FindSingleByQuery(query findBy) (interface{}, error) {
 	var result interface{}
-	err := m.collection.FindOne(context.Background(), query.convert()).Decode(&result)
+	err := m.collection.FindOne(context.TODO(), query.convert()).Decode(&result)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
+}
+
+func (m *mongoDBCollectionImpl) FindMultipleByQuery(query findBy) ([]interface{}, error) {
+	results := make([]interface{}, 0)
+	curr, err := m.collection.Find(context.TODO(), query.convert())
+	if err != nil {
+		return nil, err
+	}
+	err = curr.All(context.TODO(), &results)
+	if err != nil {
+		return nil, err
+	}
+	return results, nil
 }

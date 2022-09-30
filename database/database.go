@@ -19,7 +19,7 @@ type mongoDBImpl struct {
 }
 
 func NewDB(database string) DB {
-	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI("mongodb://0.0.0.0:27017").SetAuth(options.Credential{Username: "guest", Password: "guest"}))
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://0.0.0.0:27017").SetAuth(options.Credential{Username: "guest", Password: "guest"}))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,7 +30,7 @@ func NewDB(database string) DB {
 }
 
 func (m *mongoDBImpl) Close() error {
-	return m.client.Disconnect(context.Background())
+	return m.client.Disconnect(context.TODO())
 }
 
 func (m *mongoDBImpl) getDatabase() *mongo.Database {
