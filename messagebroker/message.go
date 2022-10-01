@@ -19,11 +19,11 @@ type publishMessage struct {
 }
 
 type EventMessage[T any] struct {
-	EventID   string    `json:"eventID"`
-	Status    status    `json:"status"`
+	EventID   string    `json:"eventID" bson:"eventID"`
+	Status    status    `json:"status" bson:"status"`
 	Body      T         `json:"body" bson:",inline"`
-	Error     string    `json:"error,omitempty"`
-	TimeStamp time.Time `json:"time"`
+	Error     string    `json:"error,omitempty" bson:"error"`
+	TimeStamp time.Time `json:"time" bson:"time"`
 }
 
 type status string

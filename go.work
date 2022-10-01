@@ -3,6 +3,8 @@ go 1.19
 use (
 	./clientApi
 	./messagebroker
-	./createuserSubscriber
+	./createusersubscriber
 	./database
+	./proto
+	./userservice
 )
