@@ -3,12 +3,12 @@ package messagebroker
 import (
 	"log"
 
+	"github.com/chatapp/messagebroker/events/createuser"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 type MessageBroker interface {
 	CloseConnection()
-	DeclareQueue(queueName string)
 	getChannel() *amqp.Channel
 }
 
@@ -27,13 +27,17 @@ func NewRabbitMQ() MessageBroker {
 		log.Fatal(err)
 	}
 
-	return &rabbitMessageBroker{
+	broker := &rabbitMessageBroker{
 		connection: connection,
 		channel:    channel,
 	}
+
+	broker.declareQueue(createuser.QUEUE_NAME)
+
+	return broker
 }
 
-func (rmq *rabbitMessageBroker) DeclareQueue(queueName string) {
+func (rmq *rabbitMessageBroker) declareQueue(queueName string) {
 	_, err := rmq.channel.QueueDeclare(queueName, false, false, false, false, nil)
 	if err != nil {
 		log.Fatal(err)

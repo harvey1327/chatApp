@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/chatapp/clientapi/client"
 	"github.com/chatapp/clientapi/internal/user"
 	"github.com/chatapp/messagebroker"
-	"github.com/chatapp/messagebroker/events/createuser"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,12 +12,14 @@ func main() {
 	broker := messagebroker.NewRabbitMQ()
 	defer broker.CloseConnection()
 
-	broker.DeclareQueue(createuser.QUEUE_NAME)
+	userClient := client.NewUserClient()
+	defer userClient.Close()
+
 	publisher := messagebroker.NewRabbitPublish(broker)
 
 	v1 := router.Group("/v1")
 	{
-		user.Route(v1, publisher)
+		user.Route(v1, publisher, userClient)
 	}
 
 	router.Run("0.0.0.0:8080")

@@ -11,7 +11,6 @@ import (
 func main() {
 	broker := messagebroker.NewRabbitMQ()
 	defer broker.CloseConnection()
-	broker.DeclareQueue(createuser.QUEUE_NAME)
 
 	db := database.NewDB("user")
 	defer db.Close()

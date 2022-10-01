@@ -27,7 +27,11 @@ func (s *ServiceImpl) GetByEventID(ctx context.Context, request *userpb.GetByEve
 	eventID := request.GetEventID()
 	res, err := s.commands.FindSingleByQuery(database.Query("eventID", eventID))
 	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
+		if err == database.EMPTY {
+			return nil, status.Error(codes.NotFound, err.Error())
+		} else {
+			return nil, status.Error(codes.Internal, err.Error())
+		}
 	}
 
 	return &userpb.EventMessage{

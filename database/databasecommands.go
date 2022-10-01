@@ -84,7 +84,7 @@ func (m *mongoDBCollectionImpl[T]) FindSingleByQuery(query findBy) (DataWrapper[
 	err := m.collection.FindOne(context.TODO(), query.convert()).Decode(&result)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return DataWrapper[T]{}, err
+			return DataWrapper[T]{}, EMPTY
 		}
 		return DataWrapper[T]{}, err
 	}
