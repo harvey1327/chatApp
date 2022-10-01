@@ -24,25 +24,29 @@ func main() {
 		if !ok {
 			break
 		}
-		log.Printf("before %+v", msg)
+
 		// save pending mesg to db
-		err := commands.InsertOne(msg)
+		insert, err := commands.InsertOne(msg)
 		if err != nil {
 			log.Println(err)
 		}
 		// Check if userName exists, it will exist as we save the pending state
-		existing, err := commands.FindSingleByQuery(database.Query("displayName", msg.Body.DisplayName))
+		existing, err := commands.FindSingleByQuery(database.Query("displayName", insert.Data.Body.DisplayName))
+		if err != nil {
+			insert.Data.Failed(err.Error())
+		}
+		if existing.Data.EventID != insert.Data.EventID {
+			//update msg to failed with error message and update db
+			insert.Data.Failed("username already exists")
+		} else {
+			insert.Data.Complete()
+		}
+
+		//save to db
+		err = commands.FindByIDAndUpdate(insert)
 		if err != nil {
 			log.Println(err)
 		}
-		if existing.EventID != msg.EventID {
-			//update msg to failed with error message and update db
-			msg.Failed("username already exists")
-		} else {
-			msg.Complete()
-		}
-
-		log.Printf("after %+v", msg)
 	}
 	log.Println("END")
 }
