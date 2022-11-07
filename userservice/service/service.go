@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/chatapp/database"
-	"github.com/chatapp/messagebroker"
-	"github.com/chatapp/messagebroker/events/createuser"
+	"github.com/chatapp/libmessagebroker"
+	"github.com/chatapp/libmessagebroker/events/createuser"
 	"github.com/chatapp/proto/generated/userpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -14,10 +14,10 @@ import (
 
 type ServiceImpl struct {
 	userpb.UnimplementedServiceServer
-	commands database.CollectionCommands[messagebroker.EventMessage[createuser.Model]]
+	commands database.CollectionCommands[libmessagebroker.EventMessage[createuser.Model]]
 }
 
-func NewService(commands database.CollectionCommands[messagebroker.EventMessage[createuser.Model]]) *ServiceImpl {
+func NewService(commands database.CollectionCommands[libmessagebroker.EventMessage[createuser.Model]]) *ServiceImpl {
 	return &ServiceImpl{
 		commands: commands,
 	}

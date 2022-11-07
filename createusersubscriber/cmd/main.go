@@ -4,20 +4,20 @@ import (
 	"log"
 
 	"github.com/chatapp/database"
-	"github.com/chatapp/messagebroker"
-	"github.com/chatapp/messagebroker/events/createuser"
+	"github.com/chatapp/libmessagebroker"
+	"github.com/chatapp/libmessagebroker/events/createuser"
 )
 
 func main() {
-	broker := messagebroker.NewRabbitMQ()
+	broker := libmessagebroker.NewRabbitMQ()
 	defer broker.CloseConnection()
 
 	db := database.NewDB("user")
 	defer db.Close()
-	commands := database.NewCollection[messagebroker.EventMessage[createuser.Model]](db, "create")
+	commands := database.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, "create")
 
 	log.Println("listening on user.create")
-	msgs := messagebroker.NewRabbitSubscribe[createuser.Model](broker).Subscribe(createuser.QUEUE_NAME)
+	msgs := libmessagebroker.NewRabbitSubscribe[createuser.Model](broker).Subscribe(createuser.QUEUE_NAME)
 	for {
 		msg, ok := <-msgs
 		if !ok {

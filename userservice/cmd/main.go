@@ -6,8 +6,8 @@ import (
 	"net"
 
 	"github.com/chatapp/database"
-	"github.com/chatapp/messagebroker"
-	"github.com/chatapp/messagebroker/events/createuser"
+	"github.com/chatapp/libmessagebroker"
+	"github.com/chatapp/libmessagebroker/events/createuser"
 	"github.com/chatapp/proto/generated/userpb"
 	"github.com/chatapp/userservice/interceptor"
 	"github.com/chatapp/userservice/service"
@@ -24,7 +24,7 @@ func main() {
 
 	db := database.NewDB("user")
 	defer db.Close()
-	commands := database.NewCollection[messagebroker.EventMessage[createuser.Model]](db, "create")
+	commands := database.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, "create")
 
 	grpcServer := grpc.NewServer(grpc.ChainUnaryInterceptor(interceptor.UnaryLoggerInterceptor()))
 

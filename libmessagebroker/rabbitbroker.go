@@ -1,9 +1,9 @@
-package messagebroker
+package libmessagebroker
 
 import (
 	"log"
 
-	"github.com/chatapp/messagebroker/events/createuser"
+	"github.com/chatapp/libmessagebroker/events/createuser"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 

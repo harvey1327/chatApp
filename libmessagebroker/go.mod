@@ -1,4 +1,4 @@
-module github.com/chatapp/messagebroker
+module github.com/chatapp/libmessagebroker
 
 go 1.19
 
