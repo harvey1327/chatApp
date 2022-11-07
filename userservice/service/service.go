@@ -6,7 +6,7 @@ import (
 	"github.com/chatapp/libdatabase"
 	"github.com/chatapp/libmessagebroker"
 	"github.com/chatapp/libmessagebroker/events/createuser"
-	"github.com/chatapp/proto/generated/userpb"
+	"github.com/chatapp/libproto/generated/userpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"

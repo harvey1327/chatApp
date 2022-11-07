@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package user;
-option go_package = "github.com/chatapp/proto/generated/userpb";
+option go_package = "github.com/chatapp/libproto/generated/userpb";
 
 import "google/protobuf/timestamp.proto";
 

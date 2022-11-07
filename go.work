@@ -2,9 +2,9 @@ go 1.19
 
 use (
 	./clientApi
-	./libmessagebroker
 	./createusersubscriber
 	./libdatabase
-	./proto
+	./libmessagebroker
+	./libproto
 	./userservice
 )

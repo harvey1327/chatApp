@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/chatapp/proto/generated/userpb"
+	"github.com/chatapp/libproto/generated/userpb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
