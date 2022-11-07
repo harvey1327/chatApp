@@ -27,7 +27,7 @@ func main() {
 		// save pending mesg to db
 		insert, err := commands.InsertOne(msg)
 		if err != nil {
-			log.Println(err)
+			log.Panic(err)
 		}
 		// Check if userName exists, it will exist as we save the pending state
 		existing, err := commands.FindSingleByQuery(libdatabase.Query("displayName", insert.Data.Body.DisplayName))
@@ -44,7 +44,7 @@ func main() {
 		//save to db
 		err = commands.FindByIDAndUpdate(insert)
 		if err != nil {
-			log.Println(err)
+			log.Panic(err)
 		}
 	}
 	log.Println("END")
