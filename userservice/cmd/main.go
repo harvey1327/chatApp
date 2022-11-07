@@ -22,9 +22,9 @@ func main() {
 		log.Printf("listening on %s", lis.Addr().String())
 	}
 
-	db := libdatabase.NewDB("user")
+	db := libdatabase.NewDB(libdatabase.USER)
 	defer db.Close()
-	commands := libdatabase.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, "create")
+	commands := libdatabase.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, createuser.QUEUE_NAME)
 
 	grpcServer := grpc.NewServer(grpc.ChainUnaryInterceptor(interceptor.UnaryLoggerInterceptor()))
 

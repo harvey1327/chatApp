@@ -23,7 +23,7 @@ func createUser(publisher libmessagebroker.Publish, userClient client.UserClient
 			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		message := libmessagebroker.PublishMessage(request, "user.create")
+		message := libmessagebroker.PublishMessage(request, createuser.QUEUE_NAME)
 		if err := publisher.Publish(message); err != nil {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return

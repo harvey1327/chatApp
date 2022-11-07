@@ -12,11 +12,11 @@ func main() {
 	broker := libmessagebroker.NewRabbitMQ()
 	defer broker.CloseConnection()
 
-	db := libdatabase.NewDB("user")
+	db := libdatabase.NewDB(libdatabase.USER)
 	defer db.Close()
-	commands := libdatabase.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, "create")
+	commands := libdatabase.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, createuser.QUEUE_NAME)
 
-	log.Println("listening on user.create")
+	log.Printf("listening on %s\n", createuser.QUEUE_NAME)
 	msgs := libmessagebroker.NewRabbitSubscribe[createuser.Model](broker).Subscribe(createuser.QUEUE_NAME)
 	for {
 		msg, ok := <-msgs

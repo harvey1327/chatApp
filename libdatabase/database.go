@@ -18,6 +18,8 @@ type mongoDBImpl struct {
 	client   *mongo.Client
 }
 
+const USER = "user"
+
 func NewDB(database string) DB {
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://0.0.0.0:27017").SetAuth(options.Credential{Username: "guest", Password: "guest"}))
 	if err != nil {
