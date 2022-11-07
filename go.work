@@ -4,7 +4,7 @@ use (
 	./clientApi
 	./libmessagebroker
 	./createusersubscriber
-	./database
+	./libdatabase
 	./proto
 	./userservice
 )

@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/chatapp/database"
+	"github.com/chatapp/libdatabase"
 	"github.com/chatapp/libmessagebroker"
 	"github.com/chatapp/libmessagebroker/events/createuser"
 	"github.com/chatapp/proto/generated/userpb"
@@ -22,9 +22,9 @@ func main() {
 		log.Printf("listening on %s", lis.Addr().String())
 	}
 
-	db := database.NewDB("user")
+	db := libdatabase.NewDB("user")
 	defer db.Close()
-	commands := database.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, "create")
+	commands := libdatabase.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, "create")
 
 	grpcServer := grpc.NewServer(grpc.ChainUnaryInterceptor(interceptor.UnaryLoggerInterceptor()))
 

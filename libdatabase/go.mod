@@ -1,4 +1,4 @@
-module github.com/chatapp/database
+module github.com/chatapp/libdatabase
 
 go 1.19
 

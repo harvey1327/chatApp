@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 
-	"github.com/chatapp/database"
+	"github.com/chatapp/libdatabase"
 	"github.com/chatapp/libmessagebroker"
 	"github.com/chatapp/libmessagebroker/events/createuser"
 	"github.com/chatapp/proto/generated/userpb"
@@ -14,10 +14,10 @@ import (
 
 type ServiceImpl struct {
 	userpb.UnimplementedServiceServer
-	commands database.CollectionCommands[libmessagebroker.EventMessage[createuser.Model]]
+	commands libdatabase.CollectionCommands[libmessagebroker.EventMessage[createuser.Model]]
 }
 
-func NewService(commands database.CollectionCommands[libmessagebroker.EventMessage[createuser.Model]]) *ServiceImpl {
+func NewService(commands libdatabase.CollectionCommands[libmessagebroker.EventMessage[createuser.Model]]) *ServiceImpl {
 	return &ServiceImpl{
 		commands: commands,
 	}
@@ -25,9 +25,9 @@ func NewService(commands database.CollectionCommands[libmessagebroker.EventMessa
 
 func (s *ServiceImpl) GetByEventID(ctx context.Context, request *userpb.GetByEventIDRequest) (*userpb.EventMessage, error) {
 	eventID := request.GetEventID()
-	res, err := s.commands.FindSingleByQuery(database.Query("eventID", eventID))
+	res, err := s.commands.FindSingleByQuery(libdatabase.Query("eventID", eventID))
 	if err != nil {
-		if err == database.EMPTY {
+		if err == libdatabase.EMPTY {
 			return nil, status.Error(codes.NotFound, err.Error())
 		} else {
 			return nil, status.Error(codes.Internal, err.Error())

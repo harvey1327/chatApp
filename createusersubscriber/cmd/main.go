@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/chatapp/database"
+	"github.com/chatapp/libdatabase"
 	"github.com/chatapp/libmessagebroker"
 	"github.com/chatapp/libmessagebroker/events/createuser"
 )
@@ -12,9 +12,9 @@ func main() {
 	broker := libmessagebroker.NewRabbitMQ()
 	defer broker.CloseConnection()
 
-	db := database.NewDB("user")
+	db := libdatabase.NewDB("user")
 	defer db.Close()
-	commands := database.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, "create")
+	commands := libdatabase.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, "create")
 
 	log.Println("listening on user.create")
 	msgs := libmessagebroker.NewRabbitSubscribe[createuser.Model](broker).Subscribe(createuser.QUEUE_NAME)
@@ -30,7 +30,7 @@ func main() {
 			log.Println(err)
 		}
 		// Check if userName exists, it will exist as we save the pending state
-		existing, err := commands.FindSingleByQuery(database.Query("displayName", insert.Data.Body.DisplayName))
+		existing, err := commands.FindSingleByQuery(libdatabase.Query("displayName", insert.Data.Body.DisplayName))
 		if err != nil {
 			insert.Data.Failed(err.Error())
 		}
