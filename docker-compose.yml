@@ -1,4 +1,10 @@
 services:
+  api:
+    build: ./clientApi
+    restart: always
+    depends_on:
+      - "broker"
+
   broker:
     image: rabbitmq:3.10.7-management-alpine
     restart: always

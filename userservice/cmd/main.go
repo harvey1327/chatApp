@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 
+	"github.com/harvey1327/chatapp/userservice/config"
 	"github.com/harvey1327/chatapp/userservice/interceptor"
 	"github.com/harvey1327/chatapp/userservice/service"
 	"github.com/harvey1327/chatapplib/database"
@@ -15,14 +16,15 @@ import (
 )
 
 func main() {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 50052))
+	conf := config.Load()
+	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d", conf.HOST, conf.PORT))
 	if err != nil {
-		log.Fatal("failed to listen: 50052")
+		log.Fatalf("failed to listen: %s:%d", conf.HOST, conf.PORT)
 	} else {
 		log.Printf("listening on %s", lis.Addr().String())
 	}
 
-	db := database.NewDB(database.USER)
+	db := database.NewDB(database.USER, database.DBConfig(conf.DB_HOST, conf.DB_PORT, conf.DB_USERNAME, conf.DB_PASSWORD))
 	defer db.Close()
 	commands := database.NewCollection[messagebroker.EventMessage[createuser.Model]](db, createuser.QUEUE_NAME)
 

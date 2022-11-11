@@ -4,8 +4,8 @@ go 1.19
 
 require (
 	github.com/gin-gonic/gin v1.8.1
-	github.com/harvey1327/chatapplib/messagebroker v0.0.0-20221111114528-462f678d647a
-	github.com/harvey1327/chatapplib/proto v0.0.0-20221111114528-462f678d647a
+	github.com/harvey1327/chatapplib/messagebroker v0.0.0-20221111150139-3f210cce773e
+	github.com/harvey1327/chatapplib/proto v0.0.0-20221111150139-3f210cce773e
 	google.golang.org/grpc v1.50.1
 )
 

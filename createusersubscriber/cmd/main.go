@@ -3,16 +3,18 @@ package main
 import (
 	"log"
 
+	"github.com/harvey1327/chatapp/createusersubscriber/config"
 	"github.com/harvey1327/chatapplib/database"
 	"github.com/harvey1327/chatapplib/messagebroker"
 	"github.com/harvey1327/chatapplib/messagebroker/events/createuser"
 )
 
 func main() {
-	broker := messagebroker.NewRabbitMQ()
+	conf := config.Load()
+	broker := messagebroker.NewRabbitMQ(messagebroker.MessageBrokerConfig(conf.MB_HOST, conf.MB_PORT, conf.MB_USERNAME, conf.MB_PASSWORD))
 	defer broker.CloseConnection()
 
-	db := database.NewDB(database.USER)
+	db := database.NewDB(database.USER, database.DBConfig(conf.DB_HOST, conf.DB_PORT, conf.DB_USERNAME, conf.DB_PASSWORD))
 	defer db.Close()
 	commands := database.NewCollection[messagebroker.EventMessage[createuser.Model]](db, createuser.QUEUE_NAME)
 
