@@ -16,7 +16,7 @@ func main() {
 	broker := messagebroker.NewRabbitMQ(messagebroker.MessageBrokerConfig(conf.MB_HOST, conf.MB_PORT, conf.MB_USERNAME, conf.MB_PASSWORD))
 	defer broker.CloseConnection()
 
-	userClient := client.NewUserClient()
+	userClient := client.NewUserClient(conf.USER_SERVICE_HOST, conf.USER_SERVICE_PORT)
 	defer userClient.Close()
 
 	publisher := messagebroker.NewRabbitPublish(broker)

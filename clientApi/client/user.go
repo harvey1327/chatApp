@@ -21,11 +21,11 @@ type userClient struct {
 	conn   *grpc.ClientConn
 }
 
-func NewUserClient() UserClient {
+func NewUserClient(host string, port int) UserClient {
 	options := []grpc.DialOption{
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	}
-	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", "0.0.0.0", 50052), options...)
+	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", host, port), options...)
 	if err != nil {
 		log.Fatal(err)
 	}
