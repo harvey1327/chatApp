@@ -3,8 +3,8 @@ module github.com/harvey1327/chatapp/createusersubscriber
 go 1.19
 
 require (
-	github.com/harvey1327/chatapplib/database v0.0.0-20221111150139-3f210cce773e
-	github.com/harvey1327/chatapplib/messagebroker v0.0.0-20221111150139-3f210cce773e
+	github.com/harvey1327/chatapplib/database v0.0.0-20221111163358-ec7f38cbafb4
+	github.com/harvey1327/chatapplib/messagebroker v1.0.0
 )
 
 require (
