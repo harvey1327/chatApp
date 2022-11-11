@@ -1,9 +1,50 @@
 services:
-  api:
+  clientapi:
     build: ./clientApi
     restart: always
     depends_on:
       - "broker"
+      - "userservice"
+    ports:
+      - 8080:8080
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8080
+      MB_HOST: broker
+      MB_PORT: 5672
+      MB_USERNAME: guest
+      MB_PASSWORD: guest
+      USER_SERVICE_HOST: userservice
+      USER_SERVICE_PORT: 50052
+  
+  createusersubscriber:
+    build: ./createusersubscriber
+    restart: always
+    depends_on:
+      - "broker"
+      - "db"
+    environment:
+      MB_HOST: broker
+      MB_PORT: 5672
+      MB_USERNAME: guest
+      MB_PASSWORD: guest
+      DB_HOST: db
+      DB_PORT: 27017
+      DB_USERNAME: guest
+      DB_PASSWORD: guest
+
+  userservice:
+    build: ./userservice
+    restart: always
+    depends_on:
+      - "db"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 50052
+      DB_HOST: db
+      DB_PORT: 27017
+      DB_USERNAME: guest
+      DB_PASSWORD: guest
 
   broker:
     image: rabbitmq:3.10.7-management-alpine
