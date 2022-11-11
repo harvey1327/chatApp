@@ -18,7 +18,6 @@ func main() {
 	defer db.Close()
 	commands := database.NewCollection[messagebroker.EventMessage[createuser.Model]](db, createuser.QUEUE_NAME)
 
-	log.Printf("listening on %s\n", createuser.QUEUE_NAME)
 	msgs := messagebroker.NewRabbitSubscribe[createuser.Model](broker).Subscribe(createuser.QUEUE_NAME)
 	for {
 		msg, ok := <-msgs
