@@ -50,14 +50,11 @@ services:
     image: rabbitmq:3.10.7-management-alpine
     restart: always
     ports:
-      - 5672:5672
       - 15672:15672
 
   db:
     image: mongo:5.0.12
     restart: always
-    ports:
-      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: guest
       MONGO_INITDB_ROOT_PASSWORD: guest
