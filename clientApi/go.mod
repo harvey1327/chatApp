@@ -1,4 +1,4 @@
-module github.com/chatapp/clientapi
+module github.com/harvey1327/chatapp/clientapi
 
 go 1.19
 

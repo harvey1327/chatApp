@@ -5,12 +5,12 @@ import (
 	"log"
 	"net"
 
-	"github.com/chatapp/libdatabase"
-	"github.com/chatapp/libmessagebroker"
-	"github.com/chatapp/libmessagebroker/events/createuser"
-	"github.com/chatapp/libproto/generated/userpb"
-	"github.com/chatapp/userservice/interceptor"
-	"github.com/chatapp/userservice/service"
+	"github.com/harvey1327/chatapp/libdatabase"
+	"github.com/harvey1327/chatapp/libmessagebroker"
+	"github.com/harvey1327/chatapp/libmessagebroker/events/createuser"
+	"github.com/harvey1327/chatapp/libproto/generated/userpb"
+	"github.com/harvey1327/chatapp/userservice/interceptor"
+	"github.com/harvey1327/chatapp/userservice/service"
 	"google.golang.org/grpc"
 )
 

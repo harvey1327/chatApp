@@ -3,10 +3,10 @@ package service
 import (
 	"context"
 
-	"github.com/chatapp/libdatabase"
-	"github.com/chatapp/libmessagebroker"
-	"github.com/chatapp/libmessagebroker/events/createuser"
-	"github.com/chatapp/libproto/generated/userpb"
+	"github.com/harvey1327/chatapp/libdatabase"
+	"github.com/harvey1327/chatapp/libmessagebroker"
+	"github.com/harvey1327/chatapp/libmessagebroker/events/createuser"
+	"github.com/harvey1327/chatapp/libproto/generated/userpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"

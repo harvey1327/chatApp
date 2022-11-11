@@ -3,7 +3,7 @@ package libmessagebroker
 import (
 	"log"
 
-	"github.com/chatapp/libmessagebroker/events/createuser"
+	"github.com/harvey1327/chatapp/libmessagebroker/events/createuser"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 

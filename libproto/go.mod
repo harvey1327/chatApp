@@ -1,3 +1,3 @@
-module github.com/chatapp/libproto
+module github.com/harvey1327/chatapp/libproto
 
 go 1.19

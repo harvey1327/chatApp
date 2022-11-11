@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/chatapp/clientapi/client"
-	"github.com/chatapp/clientapi/internal/user"
-	"github.com/chatapp/libmessagebroker"
 	"github.com/gin-gonic/gin"
+	"github.com/harvey1327/chatapp/clientapi/client"
+	"github.com/harvey1327/chatapp/clientapi/internal/user"
+	"github.com/harvey1327/chatapp/libmessagebroker"
 )
 
 func main() {
