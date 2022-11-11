@@ -1,7 +1,5 @@
-docker compose up -d
-docker compose down -v
+# chatapp
 
-docker build . -t goprotobuff:v1
-docker run --rm -v ${PWD}/generated:/go/generated -v ${PWD}/protofiles:/go/input goprotobuff:v1
+contains code for chat application platform 
 
-go run cmd/main.go
+run using `docker compose up -d`
