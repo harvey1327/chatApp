@@ -3,10 +3,10 @@ package service
 import (
 	"context"
 
-	"github.com/harvey1327/chatapp/libdatabase"
-	"github.com/harvey1327/chatapp/libmessagebroker"
-	"github.com/harvey1327/chatapp/libmessagebroker/events/createuser"
-	"github.com/harvey1327/chatapp/libproto/generated/userpb"
+	"github.com/harvey1327/chatapplib/database"
+	"github.com/harvey1327/chatapplib/messagebroker"
+	"github.com/harvey1327/chatapplib/messagebroker/events/createuser"
+	"github.com/harvey1327/chatapplib/proto/generated/userpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -14,10 +14,10 @@ import (
 
 type ServiceImpl struct {
 	userpb.UnimplementedServiceServer
-	commands libdatabase.CollectionCommands[libmessagebroker.EventMessage[createuser.Model]]
+	commands database.CollectionCommands[messagebroker.EventMessage[createuser.Model]]
 }
 
-func NewService(commands libdatabase.CollectionCommands[libmessagebroker.EventMessage[createuser.Model]]) *ServiceImpl {
+func NewService(commands database.CollectionCommands[messagebroker.EventMessage[createuser.Model]]) *ServiceImpl {
 	return &ServiceImpl{
 		commands: commands,
 	}
@@ -25,9 +25,9 @@ func NewService(commands libdatabase.CollectionCommands[libmessagebroker.EventMe
 
 func (s *ServiceImpl) GetByEventID(ctx context.Context, request *userpb.GetByEventIDRequest) (*userpb.EventMessage, error) {
 	eventID := request.GetEventID()
-	res, err := s.commands.FindSingleByQuery(libdatabase.Query("eventID", eventID))
+	res, err := s.commands.FindSingleByQuery(database.Query("eventID", eventID))
 	if err != nil {
-		if err == libdatabase.EMPTY {
+		if err == database.EMPTY {
 			return nil, status.Error(codes.NotFound, err.Error())
 		} else {
 			return nil, status.Error(codes.Internal, err.Error())

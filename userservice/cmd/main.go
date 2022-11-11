@@ -5,12 +5,12 @@ import (
 	"log"
 	"net"
 
-	"github.com/harvey1327/chatapp/libdatabase"
-	"github.com/harvey1327/chatapp/libmessagebroker"
-	"github.com/harvey1327/chatapp/libmessagebroker/events/createuser"
-	"github.com/harvey1327/chatapp/libproto/generated/userpb"
 	"github.com/harvey1327/chatapp/userservice/interceptor"
 	"github.com/harvey1327/chatapp/userservice/service"
+	"github.com/harvey1327/chatapplib/database"
+	"github.com/harvey1327/chatapplib/messagebroker"
+	"github.com/harvey1327/chatapplib/messagebroker/events/createuser"
+	"github.com/harvey1327/chatapplib/proto/generated/userpb"
 	"google.golang.org/grpc"
 )
 
@@ -22,9 +22,9 @@ func main() {
 		log.Printf("listening on %s", lis.Addr().String())
 	}
 
-	db := libdatabase.NewDB(libdatabase.USER)
+	db := database.NewDB(database.USER)
 	defer db.Close()
-	commands := libdatabase.NewCollection[libmessagebroker.EventMessage[createuser.Model]](db, createuser.QUEUE_NAME)
+	commands := database.NewCollection[messagebroker.EventMessage[createuser.Model]](db, createuser.QUEUE_NAME)
 
 	grpcServer := grpc.NewServer(grpc.ChainUnaryInterceptor(interceptor.UnaryLoggerInterceptor()))
 

@@ -4,18 +4,18 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/harvey1327/chatapp/clientapi/client"
 	"github.com/harvey1327/chatapp/clientapi/internal/user"
-	"github.com/harvey1327/chatapp/libmessagebroker"
+	"github.com/harvey1327/chatapplib/messagebroker"
 )
 
 func main() {
 	router := gin.Default()
-	broker := libmessagebroker.NewRabbitMQ()
+	broker := messagebroker.NewRabbitMQ()
 	defer broker.CloseConnection()
 
 	userClient := client.NewUserClient()
 	defer userClient.Close()
 
-	publisher := libmessagebroker.NewRabbitPublish(broker)
+	publisher := messagebroker.NewRabbitPublish(broker)
 
 	v1 := router.Group("/v1")
 	{

@@ -3,8 +3,5 @@ go 1.19
 use (
 	./clientApi
 	./createusersubscriber
-	./libdatabase
-	./libmessagebroker
-	./libproto
 	./userservice
 )
