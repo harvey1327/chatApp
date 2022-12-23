@@ -17,6 +17,8 @@ type Config struct {
 	MB_PORT           int
 	MB_USERNAME       string
 	MB_PASSWORD       string
+	ROOM_SERVICE_HOST string
+	ROOM_SERVICE_PORT int
 	USER_SERVICE_HOST string
 	USER_SERVICE_PORT int
 }
@@ -30,6 +32,8 @@ func Load() *Config {
 			MB_PORT:           getEnvAsInt("MB_PORT"),
 			MB_USERNAME:       getEnv("MB_USERNAME"),
 			MB_PASSWORD:       getEnv("MB_PASSWORD"),
+			ROOM_SERVICE_HOST: getEnv("ROOM_SERVICE_HOST"),
+			ROOM_SERVICE_PORT: getEnvAsInt("ROOM_SERVICE_PORT"),
 			USER_SERVICE_HOST: getEnv("USER_SERVICE_HOST"),
 			USER_SERVICE_PORT: getEnvAsInt("USER_SERVICE_PORT"),
 		}
