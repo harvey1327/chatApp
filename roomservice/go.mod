@@ -1,4 +1,4 @@
-module github.com/harvey1327/chatapp/userservice
+module github.com/harvey1327/chatapp/roomservice
 
 go 1.19
 

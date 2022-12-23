@@ -17,6 +17,22 @@ services:
       USER_SERVICE_HOST: userservice
       USER_SERVICE_PORT: 50052
   
+  createroomsubscriber:
+    build: ./createroomsubscriber
+    restart: always
+    depends_on:
+      - "broker"
+      - "db"
+    environment:
+      MB_HOST: broker
+      MB_PORT: 5672
+      MB_USERNAME: guest
+      MB_PASSWORD: guest
+      DB_HOST: db
+      DB_PORT: 27017
+      DB_USERNAME: guest
+      DB_PASSWORD: guest
+
   createusersubscriber:
     build: ./createusersubscriber
     restart: always
@@ -32,6 +48,19 @@ services:
       DB_PORT: 27017
       DB_USERNAME: guest
       DB_PASSWORD: guest
+
+  roomservice:
+  build: ./roomservice
+  restart: always
+  depends_on:
+    - "db"
+  environment:
+    HOST: 0.0.0.0
+    PORT: 50052
+    DB_HOST: db
+    DB_PORT: 27017
+    DB_USERNAME: guest
+    DB_PASSWORD: guest
 
   userservice:
     build: ./userservice
