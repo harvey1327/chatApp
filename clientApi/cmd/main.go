@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/harvey1327/chatapp/clientapi/client"
 	"github.com/harvey1327/chatapp/clientapi/config"
+	"github.com/harvey1327/chatapp/clientapi/internal/room"
 	"github.com/harvey1327/chatapp/clientapi/internal/user"
 	"github.com/harvey1327/chatapplib/messagebroker"
 )
@@ -19,11 +20,15 @@ func main() {
 	userClient := client.NewUserClient(conf.USER_SERVICE_HOST, conf.USER_SERVICE_PORT)
 	defer userClient.Close()
 
+	roomClient := client.NewRoomClient(conf.ROOM_SERVICE_HOST, conf.ROOM_SERVICE_PORT)
+	defer roomClient.Close()
+
 	publisher := messagebroker.NewRabbitPublish(broker)
 
 	v1 := router.Group("/v1")
 	{
 		user.Route(v1, publisher, userClient)
+		room.Route(v1, publisher, roomClient)
 	}
 
 	router.Run(fmt.Sprintf("%s:%d", conf.HOST, conf.PORT))

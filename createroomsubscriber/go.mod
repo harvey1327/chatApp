@@ -1,4 +1,4 @@
-module github.com/harvey1327/chatapp/createusersubscriber
+module github.com/harvey1327/chatapp/createroomsubscriber
 
 go 1.19
 

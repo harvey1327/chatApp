@@ -2,6 +2,8 @@ go 1.19
 
 use (
 	./clientApi
+	./createroomsubscriber
 	./createusersubscriber
+	./roomservice
 	./userservice
 )
