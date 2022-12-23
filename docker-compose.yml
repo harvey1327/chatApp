@@ -14,6 +14,8 @@ services:
       MB_PORT: 5672
       MB_USERNAME: guest
       MB_PASSWORD: guest
+      ROOM_SERVICE_HOST: roomservice
+      ROOM_SERVICE_PORT: 50051
       USER_SERVICE_HOST: userservice
       USER_SERVICE_PORT: 50052
   
@@ -56,7 +58,7 @@ services:
       - "db"
     environment:
       HOST: 0.0.0.0
-      PORT: 50052
+      PORT: 50051
       DB_HOST: db
       DB_PORT: 27017
       DB_USERNAME: guest
