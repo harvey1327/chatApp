@@ -202,8 +202,8 @@ github.com/googleapis/gax-go/v2 v2.4.0/go.mod h1:XOTVJ59hdnfJLIP/dh8n5CGryZR2LxK
 github.com/googleapis/gax-go/v2 v2.5.1/go.mod h1:h6B0KMMFNtI2ddbGJn3T3ZbwkeT6yqEF02fYlzkUCyo=
 github.com/googleapis/go-type-adapters v1.0.0/go.mod h1:zHW75FOG2aur7gAO2B+MLby+cLsWGBF62rFAi7WjWO4=
 github.com/grpc-ecosystem/grpc-gateway v1.16.0/go.mod h1:BDjrQk3hbvj6Nolgz8mAMFbcEtjT1g+wF4CSlocrBnw=
-github.com/harvey1327/chatapplib/proto v1.1.0 h1:izUKrRkJd3iPdqdEicEmAQDvlIrGLchZxMqjqqR9FCs=
-github.com/harvey1327/chatapplib/proto v1.1.0/go.mod h1:K4v8M6dSd/JcSRE5T4QpG/Ie9Rk8lzSKrx8OoK6HrB4=
+github.com/harvey1327/chatapplib/messagebroker v1.2.0 h1:j10gDyWwLFX+ToLRNp0cd33loP1mXPRoPhF38RwAmfg=
+github.com/harvey1327/chatapplib/messagebroker v1.2.0/go.mod h1:MoVbFwJpvfqPWX8kewwA/JG8mKZEok+6GfcNQ1a4cu0=
 github.com/hashicorp/golang-lru v0.5.0/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
 github.com/hashicorp/golang-lru v0.5.1/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
 github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=

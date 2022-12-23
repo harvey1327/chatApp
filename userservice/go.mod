@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/harvey1327/chatapplib/database v1.1.0
-	github.com/harvey1327/chatapplib/messagebroker v1.1.0
+	github.com/harvey1327/chatapplib/messagebroker v1.2.0
 	github.com/harvey1327/chatapplib/proto v1.1.0
 	google.golang.org/grpc v1.50.1
 	google.golang.org/protobuf v1.28.1
