@@ -5,7 +5,7 @@ import (
 
 	"github.com/harvey1327/chatapplib/database"
 	"github.com/harvey1327/chatapplib/messagebroker"
-	"github.com/harvey1327/chatapplib/messagebroker/events/createuser"
+	"github.com/harvey1327/chatapplib/models/createuser"
 	"github.com/harvey1327/chatapplib/proto/generated/userpb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

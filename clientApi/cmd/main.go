@@ -9,6 +9,8 @@ import (
 	"github.com/harvey1327/chatapp/clientapi/internal/room"
 	"github.com/harvey1327/chatapp/clientapi/internal/user"
 	"github.com/harvey1327/chatapplib/messagebroker"
+	"github.com/harvey1327/chatapplib/models/createroom"
+	"github.com/harvey1327/chatapplib/models/createuser"
 )
 
 func main() {
@@ -23,12 +25,13 @@ func main() {
 	roomClient := client.NewRoomClient(conf.ROOM_SERVICE_HOST, conf.ROOM_SERVICE_PORT)
 	defer roomClient.Close()
 
-	publisher := messagebroker.NewRabbitPublish(broker)
+	createUserPublisher := messagebroker.NewRabbitPublisher[createuser.Model](broker, createuser.GetModelConf().GetQueueName())
+	createRoomPublisher := messagebroker.NewRabbitPublisher[createroom.Model](broker, createroom.GetModelConf().GetQueueName())
 
 	v1 := router.Group("/v1")
 	{
-		user.Route(v1, publisher, userClient)
-		room.Route(v1, publisher, roomClient)
+		user.Route(v1, createUserPublisher, userClient)
+		room.Route(v1, createRoomPublisher, roomClient)
 	}
 
 	router.Run(fmt.Sprintf("%s:%d", conf.HOST, conf.PORT))

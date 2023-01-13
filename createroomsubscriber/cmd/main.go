@@ -6,7 +6,7 @@ import (
 	"github.com/harvey1327/chatapp/createroomsubscriber/config"
 	"github.com/harvey1327/chatapplib/database"
 	"github.com/harvey1327/chatapplib/messagebroker"
-	"github.com/harvey1327/chatapplib/messagebroker/events/createroom"
+	"github.com/harvey1327/chatapplib/models/createroom"
 )
 
 func main() {
@@ -16,9 +16,9 @@ func main() {
 
 	db := database.NewDB(database.USER, database.DBConfig(conf.DB_HOST, conf.DB_PORT, conf.DB_USERNAME, conf.DB_PASSWORD))
 	defer db.Close()
-	commands := database.NewCollection[messagebroker.EventMessage[createroom.Model]](db, createroom.QUEUE_NAME)
+	commands := database.NewCollection[messagebroker.EventMessage[createroom.Model]](db, createroom.GetModelConf().GetQueueName())
 
-	msgs := messagebroker.NewRabbitSubscribe[createroom.Model](broker).Subscribe(createroom.QUEUE_NAME)
+	msgs := messagebroker.NewRabbitSubscriber[createroom.Model](broker, createroom.GetModelConf().GetQueueName()).Subscribe()
 	for {
 		msg, ok := <-msgs
 		if !ok {
