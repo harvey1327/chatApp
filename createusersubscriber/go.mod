@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/harvey1327/chatapplib/database v1.3.0
 	github.com/harvey1327/chatapplib/messagebroker v1.5.0
-	github.com/harvey1327/chatapplib/models v1.3.0
+	github.com/harvey1327/chatapplib/models v1.4.0
 )
 
 require (
