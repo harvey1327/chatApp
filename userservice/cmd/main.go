@@ -9,7 +9,6 @@ import (
 	"github.com/harvey1327/chatapp/userservice/interceptor"
 	"github.com/harvey1327/chatapp/userservice/service"
 	"github.com/harvey1327/chatapplib/database"
-	"github.com/harvey1327/chatapplib/messagebroker"
 	"github.com/harvey1327/chatapplib/models/createuser"
 	"github.com/harvey1327/chatapplib/proto/generated/userpb"
 	"google.golang.org/grpc"
@@ -26,11 +25,11 @@ func main() {
 
 	db := database.NewDB(database.USER, database.DBConfig(conf.DB_HOST, conf.DB_PORT, conf.DB_USERNAME, conf.DB_PASSWORD))
 	defer db.Close()
-	commands := database.NewCollection[messagebroker.EventMessage[createuser.Model]](db, createuser.GetModelConf().GetQueueName())
+	_, eventCol := database.NewCollection[createuser.Model](db, createuser.GetModelConf().GetQueueName())
 
 	grpcServer := grpc.NewServer(grpc.ChainUnaryInterceptor(interceptor.UnaryLoggerInterceptor()))
 
-	userpb.RegisterServiceServer(grpcServer, service.NewService(commands))
+	userpb.RegisterServiceServer(grpcServer, service.NewService(eventCol))
 
 	if error := grpcServer.Serve(lis); error != nil {
 		log.Fatalf("failed to serve: %s", error)
