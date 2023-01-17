@@ -35,7 +35,7 @@ func NewUserClient(host string, port int) UserClient {
 }
 
 func (c *userClient) GetByEventID(eventID string) (*userpb.EventMessage, error) {
-	return retry(5, func(arguments ...interface{}) (*userpb.EventMessage, error) {
+	return retryNonPendingUser(5, func(arguments ...interface{}) (*userpb.EventMessage, error) {
 		return c.client.GetByEventID(context.TODO(), &userpb.GetByEventIDRequest{EventID: eventID})
 	})
 }

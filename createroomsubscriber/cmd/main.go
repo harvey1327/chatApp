@@ -49,7 +49,7 @@ func main() {
 			}
 		} else {
 			//If no error is thrown an existing userName already exists
-			event.Data = event.Data.Failed("username already exists")
+			event.Data = event.Data.Failed("room name already exists")
 			err = eventCol.FindByIDAndUpdate(event)
 			if err != nil {
 				log.Panic(err)
