@@ -14,7 +14,7 @@ func main() {
 	broker := messagebroker.NewRabbitMQ(messagebroker.MessageBrokerConfig(conf.MB_HOST, conf.MB_PORT, conf.MB_USERNAME, conf.MB_PASSWORD))
 	defer broker.CloseConnection()
 
-	db := database.NewDB(database.USER, database.DBConfig(conf.DB_HOST, conf.DB_PORT, conf.DB_USERNAME, conf.DB_PASSWORD))
+	db := database.NewDB(database.ROOM, database.DBConfig(conf.DB_HOST, conf.DB_PORT, conf.DB_USERNAME, conf.DB_PASSWORD))
 	defer db.Close()
 	modelCol, eventCol := database.NewCollection[createroom.Model](db, createroom.GetModelConf().GetQueueName())
 

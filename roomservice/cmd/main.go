@@ -23,7 +23,7 @@ func main() {
 		log.Printf("listening on %s", lis.Addr().String())
 	}
 
-	db := database.NewDB(database.USER, database.DBConfig(conf.DB_HOST, conf.DB_PORT, conf.DB_USERNAME, conf.DB_PASSWORD))
+	db := database.NewDB(database.ROOM, database.DBConfig(conf.DB_HOST, conf.DB_PORT, conf.DB_USERNAME, conf.DB_PASSWORD))
 	defer db.Close()
 	_, eventCol := database.NewCollection[createroom.Model](db, createroom.GetModelConf().GetQueueName())
 
