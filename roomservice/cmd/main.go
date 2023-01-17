@@ -9,7 +9,6 @@ import (
 	"github.com/harvey1327/chatapp/roomservice/interceptor"
 	"github.com/harvey1327/chatapp/roomservice/service"
 	"github.com/harvey1327/chatapplib/database"
-	"github.com/harvey1327/chatapplib/messagebroker"
 	"github.com/harvey1327/chatapplib/models/createroom"
 	"github.com/harvey1327/chatapplib/proto/generated/roompb"
 	"google.golang.org/grpc"
@@ -24,13 +23,13 @@ func main() {
 		log.Printf("listening on %s", lis.Addr().String())
 	}
 
-	db := database.NewDB(database.USER, database.DBConfig(conf.DB_HOST, conf.DB_PORT, conf.DB_USERNAME, conf.DB_PASSWORD))
+	db := database.NewDB(database.ROOM, database.DBConfig(conf.DB_HOST, conf.DB_PORT, conf.DB_USERNAME, conf.DB_PASSWORD))
 	defer db.Close()
-	commands := database.NewCollection[messagebroker.EventMessage[createroom.Model]](db, createroom.GetModelConf().GetQueueName())
+	_, eventCol := database.NewCollection[createroom.Model](db, createroom.GetModelConf().GetQueueName())
 
 	grpcServer := grpc.NewServer(grpc.ChainUnaryInterceptor(interceptor.UnaryLoggerInterceptor()))
 
-	roompb.RegisterServiceServer(grpcServer, service.NewService(commands))
+	roompb.RegisterServiceServer(grpcServer, service.NewService(eventCol))
 
 	if error := grpcServer.Serve(lis); error != nil {
 		log.Fatalf("failed to serve: %s", error)

@@ -35,7 +35,7 @@ func NewRoomClient(host string, port int) RoomClient {
 }
 
 func (c *roomClient) GetByEventID(eventID string) (*roompb.EventMessage, error) {
-	return retry(5, func(arguments ...interface{}) (*roompb.EventMessage, error) {
+	return retryNonPendingRoom(10, func(arguments ...interface{}) (*roompb.EventMessage, error) {
 		return c.client.GetByEventID(context.TODO(), &roompb.GetByEventIDRequest{EventID: eventID})
 	})
 }
