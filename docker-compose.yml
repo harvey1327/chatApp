@@ -89,6 +89,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: guest
       MONGO_INITDB_ROOT_PASSWORD: guest
+    ports:
+      - 27017:27017
 
   db-ui:
     image: mongo-express:0.54.0

@@ -10,12 +10,12 @@ github.com/golang/snappy v0.0.4/go.mod h1:/XxbfmMg8lxefKM7IXC3fBNl/7bRcc72aCRzEW
 github.com/google/go-cmp v0.5.2/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.6 h1:BKbKCqvP6I+rmFHt06ZmyQtvB8xAkWdhFyr0ZUNZcxQ=
-github.com/harvey1327/chatapplib/database v1.3.0 h1:FSJ+eOYosvyEMcN6u8cQhwe87DqGUMra4PPBBJa8E6s=
-github.com/harvey1327/chatapplib/database v1.3.0/go.mod h1:mu3SA+3yQAa3t/XzayEiL082owIxZX17EQjZJqaWPQ4=
+github.com/harvey1327/chatapplib/database v1.5.0 h1:9h81L2MD25emb088G04Vr+qNYvZztoj8EAdgMiwTCVw=
+github.com/harvey1327/chatapplib/database v1.5.0/go.mod h1:mu3SA+3yQAa3t/XzayEiL082owIxZX17EQjZJqaWPQ4=
 github.com/harvey1327/chatapplib/models v1.5.0 h1:QONk1Ybmd3SnTIZ/gFjLenkQQ9Uy0Hi9kHYuC9xhdIA=
 github.com/harvey1327/chatapplib/models v1.5.0/go.mod h1:wNoUrLXkq8J088nOechQzkU0tFQBj0n7ZZ+H/0G8V9I=
-github.com/harvey1327/chatapplib/proto v1.1.0 h1:izUKrRkJd3iPdqdEicEmAQDvlIrGLchZxMqjqqR9FCs=
-github.com/harvey1327/chatapplib/proto v1.1.0/go.mod h1:K4v8M6dSd/JcSRE5T4QpG/Ie9Rk8lzSKrx8OoK6HrB4=
+github.com/harvey1327/chatapplib/proto v1.2.0 h1:jUE5w62nznppv+kLTW1Vj0Wx/OxhrK4uG7eFjltcWto=
+github.com/harvey1327/chatapplib/proto v1.2.0/go.mod h1:K4v8M6dSd/JcSRE5T4QpG/Ie9Rk8lzSKrx8OoK6HrB4=
 github.com/klauspost/compress v1.13.6/go.mod h1:/3/Vjq9QcHkK5uEr5lBEmyoZ1iFhe47etQ6QUkpK6sk=
 github.com/klauspost/compress v1.15.12 h1:YClS/PImqYbn+UILDnqxQCZ3RehC9N318SU3kElDUEM=
 github.com/klauspost/compress v1.15.12/go.mod h1:QPwzmACJjUTFsnSHH934V6woptycfrDDJnH7hvFVbGM=

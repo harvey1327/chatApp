@@ -1,6 +1,7 @@
 package user
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -27,12 +28,17 @@ func createUser(publisher messagebroker.Publish[createuser.Model], userClient cl
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		} else {
-			result, err := userClient.GetByEventID(message.EventID)
+			events, err := userClient.GetByEventID(message.EventID)
 			if err != nil {
 				ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 				return
 			}
-			ctx.JSON(200, result)
+			var response any
+			for event := range events {
+				log.Printf("Read event: %+v\n", event)
+				response = event
+			}
+			ctx.JSON(200, response)
 		}
 	}
 }

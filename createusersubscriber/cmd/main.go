@@ -26,7 +26,7 @@ func main() {
 		}
 
 		// save pending event mesg to db
-		event, err := eventCol.InsertOne(msg)
+		_, err := eventCol.InsertOne(msg)
 		if err != nil {
 			log.Panic(err)
 		}
@@ -39,8 +39,7 @@ func main() {
 				if err != nil {
 					log.Panic(err)
 				}
-				event.Data = event.Data.Complete(model.ID.Hex())
-				err = eventCol.FindByIDAndUpdate(event)
+				_, err = eventCol.InsertOne(msg.Complete(model.ID.Hex()))
 				if err != nil {
 					log.Panic(err)
 				}
@@ -49,8 +48,7 @@ func main() {
 			}
 		} else {
 			//If no error is thrown an existing userName already exists
-			event.Data = event.Data.Failed("username already exists")
-			err = eventCol.FindByIDAndUpdate(event)
+			_, err = eventCol.InsertOne(msg.Failed("username already exists"))
 			if err != nil {
 				log.Panic(err)
 			}
