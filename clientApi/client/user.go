@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 
 	"github.com/harvey1327/chatapplib/proto/generated/userpb"
@@ -11,7 +12,7 @@ import (
 )
 
 type UserClient interface {
-	GetByEventID(eventID string) (*userpb.EventMessage, error)
+	GetByEventID(eventID string) (<-chan *userpb.EventMessage, error)
 	Close() error
 }
 
@@ -34,10 +35,28 @@ func NewUserClient(host string, port int) UserClient {
 	}
 }
 
-func (c *userClient) GetByEventID(eventID string) (*userpb.EventMessage, error) {
-	return retryNonPendingUser(10, func(arguments ...interface{}) (*userpb.EventMessage, error) {
-		return c.client.GetByEventID(context.TODO(), &userpb.GetByEventIDRequest{EventID: eventID})
-	})
+func (c *userClient) GetByEventID(eventID string) (<-chan *userpb.EventMessage, error) {
+	stream, err := c.client.GetByEventID(context.Background(), &userpb.GetByEventIDRequest{EventID: eventID})
+	if err != nil {
+		return nil, err
+	}
+	res := make(chan *userpb.EventMessage)
+
+	go func() {
+		for {
+			event, err := stream.Recv()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				panic(err)
+			}
+			res <- event
+		}
+		close(res)
+	}()
+
+	return res, nil
 }
 
 func (c *userClient) Close() error {

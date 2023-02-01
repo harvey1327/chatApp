@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 
 	"github.com/harvey1327/chatapplib/proto/generated/roompb"
@@ -11,7 +12,7 @@ import (
 )
 
 type RoomClient interface {
-	GetByEventID(eventID string) (*roompb.EventMessage, error)
+	GetByEventID(eventID string) (<-chan *roompb.EventMessage, error)
 	Close() error
 }
 
@@ -34,10 +35,28 @@ func NewRoomClient(host string, port int) RoomClient {
 	}
 }
 
-func (c *roomClient) GetByEventID(eventID string) (*roompb.EventMessage, error) {
-	return retryNonPendingRoom(10, func(arguments ...interface{}) (*roompb.EventMessage, error) {
-		return c.client.GetByEventID(context.TODO(), &roompb.GetByEventIDRequest{EventID: eventID})
-	})
+func (c *roomClient) GetByEventID(eventID string) (<-chan *roompb.EventMessage, error) {
+	stream, err := c.client.GetByEventID(context.Background(), &roompb.GetByEventIDRequest{EventID: eventID})
+	if err != nil {
+		return nil, err
+	}
+	res := make(chan *roompb.EventMessage)
+
+	go func() {
+		for {
+			event, err := stream.Recv()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				panic(err)
+			}
+			res <- event
+		}
+		close(res)
+	}()
+
+	return res, nil
 }
 
 func (c *roomClient) Close() error {
