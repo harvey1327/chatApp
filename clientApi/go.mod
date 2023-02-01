@@ -6,7 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/harvey1327/chatapplib/messagebroker v1.5.0
 	github.com/harvey1327/chatapplib/models v1.5.0
-	github.com/harvey1327/chatapplib/proto v1.1.0
+	github.com/harvey1327/chatapplib/proto v1.2.0
 	google.golang.org/grpc v1.50.1
 )
 

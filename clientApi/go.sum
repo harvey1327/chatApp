@@ -48,8 +48,8 @@ github.com/harvey1327/chatapplib/messagebroker v1.5.0 h1:b/jb36ib0fMwRYTw2Ey87i+
 github.com/harvey1327/chatapplib/messagebroker v1.5.0/go.mod h1:RLuyEx/k+aie0D7MNbw2fBPBPEjZQghzEEaw5P1RB+w=
 github.com/harvey1327/chatapplib/models v1.5.0 h1:QONk1Ybmd3SnTIZ/gFjLenkQQ9Uy0Hi9kHYuC9xhdIA=
 github.com/harvey1327/chatapplib/models v1.5.0/go.mod h1:wNoUrLXkq8J088nOechQzkU0tFQBj0n7ZZ+H/0G8V9I=
-github.com/harvey1327/chatapplib/proto v1.1.0 h1:izUKrRkJd3iPdqdEicEmAQDvlIrGLchZxMqjqqR9FCs=
-github.com/harvey1327/chatapplib/proto v1.1.0/go.mod h1:K4v8M6dSd/JcSRE5T4QpG/Ie9Rk8lzSKrx8OoK6HrB4=
+github.com/harvey1327/chatapplib/proto v1.2.0 h1:jUE5w62nznppv+kLTW1Vj0Wx/OxhrK4uG7eFjltcWto=
+github.com/harvey1327/chatapplib/proto v1.2.0/go.mod h1:K4v8M6dSd/JcSRE5T4QpG/Ie9Rk8lzSKrx8OoK6HrB4=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
