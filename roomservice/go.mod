@@ -3,7 +3,7 @@ module github.com/harvey1327/chatapp/roomservice
 go 1.19
 
 require (
-	github.com/harvey1327/chatapplib/database v1.4.0
+	github.com/harvey1327/chatapplib/database v1.5.0
 	github.com/harvey1327/chatapplib/models v1.5.0
 	github.com/harvey1327/chatapplib/proto v1.2.0
 	google.golang.org/grpc v1.50.1
